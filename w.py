@@ -25,7 +25,7 @@ for i in range(10000):
 
         print(f"Trying: {password} | Response: {response_text}")
 
-        if "successfully" in response_text:
+        if "successfully logged in" in response_text:
             print(f"\nSuccess! Logged in with password: {password}")
             break  # Stop the loop if "logged" is found
 
